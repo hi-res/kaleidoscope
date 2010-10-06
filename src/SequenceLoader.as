@@ -83,5 +83,13 @@ package {
 		public function get imageCount() : int {
 			return _count;
 		}
+
+		public function get loadCount() : int {
+			return _loadCount;
+		}
+
+		public function get loadTotal() : int {
+			return _loadTotal;
+		}
 	}
 }
