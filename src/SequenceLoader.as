@@ -15,7 +15,6 @@ package {
 		private var _count : int;
 		private var _loader : Loader;
 		private var _loadCount : int;
-		private var _loadTotal : int;
 		private var _bdAr : Array = [];
 
 		public function SequenceLoader(directory : String, imageCount : int) {
@@ -25,15 +24,14 @@ package {
 		}
 
 		public function load() : void {
-			_loadCount = 1;
-			_loadTotal = _count;
+			_loadCount = 0;
 			loadNext();
 		}
 
 		private function loadNext() : void {
 			_loader = new Loader();
 			var s : String = _dir;
-			s += _loadCount + ".jpg";
+			s += _loadCount + 1 + ".jpg";
 			_loader.load(new URLRequest(s));
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
 		}
@@ -65,7 +63,7 @@ package {
 
 			_bdAr.push(bd);
 			_loadCount++;
-			if (_loadCount <= _loadTotal) {
+			if (_loadCount < imageCount) {
 				dispatchEvent(new SequenceLoaderEvent(SequenceLoaderEvent.IMAGE_LOADED));
 				loadNext();
 			}
@@ -88,8 +86,5 @@ package {
 			return _loadCount;
 		}
 
-		public function get loadTotal() : int {
-			return _loadTotal;
-		}
 	}
 }

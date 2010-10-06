@@ -62,7 +62,7 @@ package {
 		}
 
 		private function eImageLoaded(event : SequenceLoaderEvent) : void {
-			text.text = sequence.loadCount + " OF " + sequence.loadTotal + " LOADED";
+			text.text = sequence.loadCount + " OF " + sequence.imageCount + " LOADED";
 		}
 
 		private function eAdded(event : Event) : void {

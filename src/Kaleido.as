@@ -32,7 +32,7 @@ package {
 		public function Kaleido(sequence:SequenceLoader) {
 			_sequence = sequence;
 			addChild(_sprite = new Sprite());
-			_sequence.addEventListener(SequenceLoaderEvent.COMPLETE, eLoadComplete);
+			_sequence.addEventListener(SequenceLoaderEvent.IMAGE_LOADED, eLoadComplete);
 			_sequence.load();
 			addEventListener(Event.ADDED_TO_STAGE,eAddedToStage);
 		}
@@ -42,8 +42,10 @@ package {
 		}
 
 		private function eLoadComplete(event : Event) : void {
+			if(_sequence.loadCount < 3) return;
 			init();
 			play();
+			_sequence.removeEventListener(SequenceLoaderEvent.IMAGE_LOADED, eLoadComplete);
 		}
 
 		public function play() : void {
@@ -126,7 +128,7 @@ package {
 		}
 
 		private function render(e : Event = null) : void {
-			if (_currentBitmapData == _sequence.imageCount - 1) _dir = false;
+			if (_currentBitmapData == _sequence.loadCount - 1) _dir = false;
 			else if (_currentBitmapData == 0) _dir = true;
 
 			_currentBitmapData = (_dir) ? _currentBitmapData + 1 : _currentBitmapData - 1;
